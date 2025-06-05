@@ -5,12 +5,14 @@ import { toast, ToastContainer } from "react-toastify";
 
 const SendMessages = () => {
   const [message, setMessage] = useState();
-  const { driverName, driverId } = useParams();
+  const { name, id, role } = useParams();
   const [loading, setLoading] = useState(false);
   const handleSubmit = async (e) => {
     e.preventDefault();
     const body = {
-      driverId,
+      name,
+      id,
+      role,
       message,
     };
     console.log("Form Data:", body);
@@ -31,7 +33,7 @@ const SendMessages = () => {
     <div className="h-screen">
       <div className="max-w-md mx-auto mt-10 p-6 bg-white rounded-lg shadow-md">
         <h2 className="text-2xl font-bold mb-4 text-center">
-          Send a Message to {driverName} 📩
+          Send a Message to {name}
         </h2>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>

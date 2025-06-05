@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { useApprovedDrivers } from "../context/ApprovedContext";
+import { Link } from "react-router-dom";
 
 const AllPassengers = () => {
   const { allPassengers } = useApprovedDrivers();
@@ -17,11 +18,13 @@ const AllPassengers = () => {
         <table className="min-w-full table-auto shadow-lg rounded-lg overflow-hidden">
           <thead className="bg-gray-100 text-sm text-gray-600 uppercase">
             <tr>
-              {["S.No", "Username", "Phone Number", "Registered At"].map((heading, i) => (
-                <th key={i} className="px-4 py-3 text-left whitespace-nowrap">
-                  {heading}
-                </th>
-              ))}
+              {["S.No", "Username", "Phone Number", "Registered At"].map(
+                (heading, i) => (
+                  <th key={i} className="px-4 py-3 text-left whitespace-nowrap">
+                    {heading}
+                  </th>
+                )
+              )}
             </tr>
           </thead>
           <tbody className="bg-white text-sm text-gray-700">
@@ -33,6 +36,15 @@ const AllPassengers = () => {
                 >
                   <td className="px-4 py-3">{idx + 1}</td>
                   <td className="px-4 py-3">{passenger.username}</td>
+                  <td className="px-4 py-3">
+                    <Link
+                      to={`/messages/passenger/${passenger.username}/${passenger._id}`}
+                    >
+                      <button className="bg-blue-600 rounded-md text-white cursor-pointer px-2 py-1.5">
+                        Message
+                      </button>
+                    </Link>
+                  </td>
                   <td className="px-4 py-3">{passenger.phoneNumber}</td>
                   <td className="px-4 py-3">
                     {new Date(passenger.createdAt).toLocaleDateString()}

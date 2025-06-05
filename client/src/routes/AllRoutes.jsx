@@ -23,7 +23,7 @@ const AllRoutes = () => {
         <Route path="/passengers" element={<AllPassengers/>} />
         <Route path="/trips" element={<div>Trips Content</div>} />
         <Route path="/feedback" element={<div>Feedback Content</div>} />
-        <Route path="/messages/:driverName/:driverId" element={<SendMessages/>} />
+        <Route path="/messages/:role/:name/:id" element={<SendMessages/>} />
       </Route>
     </Routes>
   );

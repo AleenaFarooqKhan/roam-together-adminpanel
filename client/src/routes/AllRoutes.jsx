@@ -8,6 +8,7 @@ import Layout from "../pages/Layout";
 import DriversRequest from "../pages/DriversRequest";
 import ApprovedDrivers from "../pages/ApprovedDrivers";
 import AllPassengers from "../pages/AllPassengers";
+import SendMessages from "../components/SendMessages";
 
 const AllRoutes = () => {
   const { user } = useAuth();
@@ -22,6 +23,7 @@ const AllRoutes = () => {
         <Route path="/passengers" element={<AllPassengers/>} />
         <Route path="/trips" element={<div>Trips Content</div>} />
         <Route path="/feedback" element={<div>Feedback Content</div>} />
+        <Route path="/messages" element={<SendMessages/>} />
       </Route>
     </Routes>
   );

@@ -25,6 +25,7 @@ const Sidebar = () => {
     { name: "Passengers", path: "/passengers" },
     { name: "Trips", path: "/trips" },
     { name: "Feedback", path: "/feedback" },
+    { name: "Messages", path: "/messages" },
   ];
 
   return (

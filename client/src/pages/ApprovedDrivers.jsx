@@ -1,13 +1,15 @@
-import React from "react";
+import { FaCircleNotch } from "react-icons/fa";
 import { useApprovedDrivers } from "../context/ApprovedContext";
-
+import { Link } from "react-router-dom";
 const ApprovedDrivers = () => {
-  const { allDrivers,refreshData } = useApprovedDrivers();
+  const { allDrivers, refreshData } = useApprovedDrivers();
   console.log(allDrivers);
 
   return (
     <div className="bg-gray-50 min-h-screen py-6 px-4">
-      <h1 className="text-center text-3xl font-semibold text-gray-800 mb-8">All Drivers</h1>
+      <h1 className="text-center text-3xl font-semibold text-gray-800 mb-8">
+        All Drivers
+      </h1>
       <div className="flex items-center justify-center">
         <div className="overflow-x-auto w-full max-w-6xl shadow-lg rounded-lg bg-white">
           <table className="min-w-full table-auto">
@@ -19,6 +21,7 @@ const ApprovedDrivers = () => {
                   "Last Name",
                   "Phone",
                   "DOB",
+                  "Feedback",
                   "Profile picture",
                   "License",
                   "Model",
@@ -35,44 +38,58 @@ const ApprovedDrivers = () => {
               </tr>
             </thead>
             <tbody className="text-gray-700">
-              {allDrivers.allDrivers.length > 0
-                ? allDrivers.allDrivers.map((driver, idx) => (
-                    <tr key={driver._id} className="border-t">
-                      <td className="px-4 py-3 text-center">{idx + 1}</td>
-                      <td className="px-4 py-3">{driver.firstName}</td>
-                      <td className="px-4 py-3">{driver.lastName}</td>
-                      <td className="px-4 py-3">{driver.phoneNumber}</td>
-                      <td className="px-4 py-3">{new Date(driver.dob).toLocaleDateString()}</td>
-                      <td className="px-4 py-3 text-center">
-                        <img
-                          src={driver.profilePicture}
-                          alt="Vehicle Front"
-                          className="w-16 h-16 object-cover rounded-md"
-                        />
-                      </td>
-                      <td className="px-4 py-3">{driver.licenseNumber}</td>
-                      <td className="px-4 py-3">{driver.vehicleModel}</td>
-                      <td className="px-4 py-3 text-center">
-                        <img
-                          src={driver.vehicleFrontPicture}
-                          alt="Vehicle Front"
-                          className="w-16 h-16 object-cover rounded-md"
-                        />
-                      </td>
-                      <td className="px-4 py-3 text-center">
-                        <img
-                          src={driver.licenseCertificate}
-                          alt="Vehicle Back"
-                          className="w-16 h-16 object-cover rounded-md"
-                        />
-                      </td>
-                    </tr>
-                  ))
-                : (
-                  <tr>
-                    <td colSpan="9" className="px-4 py-3 text-center text-lg text-gray-500">No Drivers</td>
+              {allDrivers.allDrivers.length > 0 ? (
+                allDrivers.allDrivers.map((driver, idx) => (
+                  <tr key={driver._id} className="border-t">
+                    <td className="px-4 py-3 text-center">{idx + 1}</td>
+                    <td className="px-4 py-3">{driver.firstName}</td>
+                    <td className="px-4 py-3">{driver.lastName}</td>
+                    <td className="px-4 py-3">{driver.phoneNumber}</td>
+                    <td className="px-4 py-3">
+                      {new Date(driver.dob).toLocaleDateString()}
+                    </td>
+                    <td className="px-4 py-3">
+                      <Link to={`/messages/${driver.firstName}/${driver._id}`}>
+                        <button className="bg-blue-600 rounded-md text-white cursor-pointer px-2 py-1.5">
+                          Message
+                        </button>
+                      </Link>
+                    </td>
+                    <td className="px-4 py-3 text-center">
+                      <img
+                        src={driver.profilePicture}
+                        alt="Vehicle Front"
+                        className="w-16 h-16 object-cover rounded-md"
+                      />
+                    </td>
+                    <td className="px-4 py-3">{driver.licenseNumber}</td>
+                    <td className="px-4 py-3">{driver.vehicleModel}</td>
+                    <td className="px-4 py-3 text-center">
+                      <img
+                        src={driver.vehicleFrontPicture}
+                        alt="Vehicle Front"
+                        className="w-16 h-16 object-cover rounded-md"
+                      />
+                    </td>
+                    <td className="px-4 py-3 text-center">
+                      <img
+                        src={driver.licenseCertificate}
+                        alt="Vehicle Back"
+                        className="w-16 h-16 object-cover rounded-md"
+                      />
+                    </td>
                   </tr>
-                )}
+                ))
+              ) : (
+                <tr>
+                  <td
+                    colSpan="9"
+                    className="px-4 py-3 text-center text-lg text-gray-500"
+                  >
+                    No Drivers
+                  </td>
+                </tr>
+              )}
             </tbody>
           </table>
         </div>

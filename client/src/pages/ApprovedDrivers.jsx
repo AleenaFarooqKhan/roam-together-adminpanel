@@ -25,6 +25,7 @@ const ApprovedDrivers = () => {
                   "DOB",
                   "Feedback",
                   "Status",
+                  "Action",
                   "Profile picture",
                   "License",
                   "Model",
@@ -57,6 +58,17 @@ const ApprovedDrivers = () => {
                           Message
                         </button>
                       </Link>
+                    </td>
+                    <td className="px-4 py-3">
+                      {driver.isBlocked ? (
+                        <span className="text-red-600 font-semibold">
+                          Blocked
+                        </span>
+                      ) : (
+                        <span className="text-green-600 font-semibold">
+                          Active
+                        </span>
+                      )}
                     </td>
                     <td className="px-4 py-3">
                       {driver.isBlocked ? (

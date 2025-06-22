@@ -1,8 +1,10 @@
-import { FaCircleNotch } from "react-icons/fa";
 import { useApprovedDrivers } from "../context/ApprovedContext";
 import { Link } from "react-router-dom";
+import { toast, ToastContainer } from "react-toastify";
+import axios from "axios";
+import "react-toastify/dist/ReactToastify.css";
 const ApprovedDrivers = () => {
-  const { allDrivers, refreshData } = useApprovedDrivers();
+  const { allDrivers, refreshData, setAllDrivers } = useApprovedDrivers();
   console.log(allDrivers);
 
   return (
@@ -22,6 +24,7 @@ const ApprovedDrivers = () => {
                   "Phone",
                   "DOB",
                   "Feedback",
+                  "Status",
                   "Profile picture",
                   "License",
                   "Model",
@@ -54,6 +57,71 @@ const ApprovedDrivers = () => {
                           Message
                         </button>
                       </Link>
+                    </td>
+                    <td className="px-4 py-3">
+                      {driver.isBlocked ? (
+                        <button
+                          className="bg-green-600 rounded-md text-white cursor-pointer px-2 py-1.5"
+                          onClick={async () => {
+                            try {
+                              const blockResponse = await axios.patch(
+                                `http://localhost:3000/api/driver/${driver._id}/toggle-block`
+                              );
+                              setAllDrivers((prev) => ({
+                                ...prev,
+                                allDrivers: prev.allDrivers.map((d) =>
+                                  d._id === driver._id
+                                    ? { ...d, isBlocked: false }
+                                    : d
+                                ),
+                              }));
+                              toast.success(
+                                blockResponse.data.message ||
+                                  "Driver unblocked successfully"
+                              );
+                            } catch (error) {
+                              console.error("Error unblocking driver:", error);
+                              toast.error(
+                                error.response?.data?.message ||
+                                  "Failed to unblock driver !!"
+                              );
+                            }
+                          }}
+                        >
+                          Unblock
+                        </button>
+                      ) : (
+                        <button
+                          className="bg-red-600 rounded-md text-white cursor-pointer px-2 py-1.5"
+                          onClick={async () => {
+                            try {
+                              const blockResponse = await axios.patch(
+                                `http://localhost:3000/api/driver/${driver._id}/toggle-block`
+                              );
+                              toast.success(
+                                blockResponse.data.message ||
+                                  "Driver blocked successfully"
+                              );
+                              setAllDrivers((prev) => ({
+                                ...prev,
+                                allDrivers: prev.allDrivers.map((d) =>
+                                  d._id === driver._id
+                                    ? { ...d, isBlocked: true }
+                                    : d
+                                ),
+                              }));
+                            } catch (error) {
+                              console.error("Error blocking driver:", error);
+                              toast.error(
+                                error.response?.data?.message ||
+                                  "Failed to block driver"
+                              );
+                            }
+                          }}
+                        >
+                          Block
+                        </button>
+                      )}
                     </td>
                     <td className="px-4 py-3 text-center">
                       <img
@@ -100,6 +168,7 @@ const ApprovedDrivers = () => {
       >
         Refresh
       </button>
+      <ToastContainer />
     </div>
   );
 };

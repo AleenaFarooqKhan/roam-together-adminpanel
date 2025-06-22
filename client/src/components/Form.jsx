@@ -96,12 +96,6 @@ const Form = () => {
           {isSubmitting ? "Logging in..." : "Login"}
         </button>
 
-        <p className="text-center">
-          Not an admin of Roam?{" "}
-          <Link to="/register" className="text-blue-500 font-semibold">
-            Register
-          </Link>
-        </p>
       </form>
       <ToastContainer />
     </div>
